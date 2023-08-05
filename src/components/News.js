@@ -27,8 +27,9 @@ export default class News extends Component {
         }
     }
 
-   async componentDidMount(){
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&pageSize=${this.props.page}`;
+   async componentDidMount(){  
+    //let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&pageSize=${this.props.page}`;
+      let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&country=${this.props.country}&apikey=2640cbcbf1e554199c760f63c645e797`;
       let data = await fetch(url);
       let parsedData = await data.json();
       this.setState({articles: parsedData.articles , totalResults: parsedData.totalResults});
@@ -36,7 +37,8 @@ export default class News extends Component {
 
   handlePrevClick = async ()=>{
 
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&page=${this.state.page-1}&pageSize=${this.props.page}`;
+    //let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&page=${this.state.page-1}&pageSize=${this.props.page}`;
+    let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&country=${this.props.country}&apikey=2640cbcbf1e554199c760f63c645e797`;
     this.setState({loading: true});
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -52,7 +54,8 @@ export default class News extends Component {
 
   handleNextClick = async ()=>{
     if(!(this.state.page+1 > Math.ceil(this.state.totalResults/this.props.page))){
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&page=${this.state.page+1}&pageSize=${this.props.page}`;
+      //let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8df3962a2597424284deb7aa7adf3c14&page=${this.state.page+1}&pageSize=${this.props.page}`;
+      let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&country=${this.props.country}&apikey=2640cbcbf1e554199c760f63c645e797`;
       this.setState({loading: true});
       let data = await fetch(url);
       let parsedData = await data.json();
@@ -77,7 +80,7 @@ export default class News extends Component {
               <div className='row'>
                 {this.state.articles.map( (element)=>{
                     return  <div className='col-md-4 my-5' key={element.url}>
-                            <NewsItem title={element.title?element.title.slice(0,44):""} description={element.description?element.description.slice(0,88):""} imageUrl={element.urlToImage?element.urlToImage:"https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202009/news_flash_1_1200x768_1200x768_0_1200x768.jpeg?KEkY9ojiY0aCaCS7RwPFCdgIJwPn7KSh&size=770:433"} newsUrl={element.url}/>
+                            <NewsItem title={element.title?element.title.slice(0,44):""} description={element.description?element.description.slice(0,88):""} imageUrl={element.image?element.image:"https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202009/news_flash_1_1200x768_1200x768_0_1200x768.jpeg?KEkY9ojiY0aCaCS7RwPFCdgIJwPn7KSh&size=770:433"} newsUrl={element.url}/>
                             </div>
                 })}
             </div>
